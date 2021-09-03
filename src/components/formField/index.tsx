@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const optionCheckArray: Array<boolean> = [];
+
 const FormField: FC<Props> = (props) => {
   const {
     type,
@@ -47,8 +49,8 @@ const FormField: FC<Props> = (props) => {
   } = props;
 
   const classes = useStyles();
-  let optionCheckArray: Array<boolean> = [];
-  options?.map((v) => {
+  
+  options?.map(() => {
     optionCheckArray.push(false);
   });
   const [optionChecks, setOptionChecks] = React.useState(optionCheckArray);
@@ -82,7 +84,7 @@ const FormField: FC<Props> = (props) => {
   };
 
   const checkValidate = (value: string) => {
-    var error = false;
+    let error = false;
     if (type === "short-text") {
       error = value === "" || !validator.isAlpha(value);
     } else if (type === "date") {
@@ -90,10 +92,11 @@ const FormField: FC<Props> = (props) => {
     } else if (type === "email") {
       error = value === "" || !validator.isEmail(value);
     } else if (type === "phone-number") {
+      //eslint-disable-next-line
       const phoneRegEx = RegExp(
-        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+        /^[(]?[0-9]{3}[)]?[-\s]?[0-9]{3}[-\s]?[0-9]{4,6}$/im
       );
-      let ismatch = value.match(phoneRegEx);
+      const ismatch = value.match(phoneRegEx);
       error = value === "" || ismatch === null;
     }
     validityChangedForm(!error, id, value);
@@ -110,8 +113,8 @@ const FormField: FC<Props> = (props) => {
   ) => {
     const id = parseInt(event.target.id);
 
-    var optionIndexTemp: Array<boolean> = [];
-    options!.map((_option, idx) => {
+    const optionIndexTemp: Array<boolean> = [];
+    options?.map((_option, idx) => {
       if (idx === id) {
         optionIndexTemp.push(!optionChecks[idx]);
       } else {
@@ -120,8 +123,8 @@ const FormField: FC<Props> = (props) => {
     });
 
     setOptionChecks(optionIndexTemp);
-    var checkedArray: Array<string> = [];
-    options!.map((option, index) => {
+    const checkedArray: Array<string> = [];
+    options?.map((option, index) => {
       if (optionIndexTemp[index] == true) {
         checkedArray.push(option);
       }
@@ -170,7 +173,7 @@ const FormField: FC<Props> = (props) => {
       alignItems="center"
     >
       {hasDescription ? (
-        <Tooltip title={description!} arrow placement="right-start">
+        <Tooltip title={description ?? ""} arrow placement="right-start">
           {inputField()}
         </Tooltip>
       ) : (

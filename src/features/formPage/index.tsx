@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { Box, Button, Grid } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { CSVLink } from "react-csv";
@@ -9,7 +9,7 @@ import FormField from "../../components/formField";
 import database from "./database.json";
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   rootContainer: {
     width: "100%",
     height: "100%",
@@ -61,9 +61,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-var csvData: Array<Array<string>> = [];
-let map = new Map();
-let mapCSV = new Map();
+let csvData: Array<Array<string>> = [];
+const map = new Map();
+const mapCSV = new Map();
 
 const FormPage: FC = () => {
   const classes = useStyles();
@@ -72,7 +72,7 @@ const FormPage: FC = () => {
 
   React.useEffect(() => {
     {
-      database.map((fieldData, index) => {
+      database.map((fieldData) => {
         if (fieldData.type !== "multi-select") {
           map.set(fieldData.id, false);
         } else {
@@ -83,7 +83,7 @@ const FormPage: FC = () => {
   }, []);
 
   const checkSubmitValid = () => {
-    for (let value of map.values()) {
+    for (const value of map.values()) {
       if (value === false) {
         return false;
       }
@@ -95,17 +95,17 @@ const FormPage: FC = () => {
     map.set(id, isValid);
     mapCSV.set(id, value);
     
-    let check = checkSubmitValid();
+    const check = checkSubmitValid();
     setSubmitValid(check);
     if (check) {
       csvData = [];
-      let names: Array<string> = [];
-      database.map((fieldData, index) => {
+      const names: Array<string> = [];
+      database.map((fieldData) => {
         names.push(fieldData.name);
       });
 
-      let values: Array<string> = [];
-      for (let value of mapCSV.values()) {
+      const values: Array<string> = [];
+      for (const value of mapCSV.values()) {
         values.push(value);
       }
       csvData.push(names);
