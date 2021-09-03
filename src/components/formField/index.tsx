@@ -93,8 +93,8 @@ const FormField: FC<Props> = (props) => {
       const phoneRegEx = RegExp(
         /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
       );
-      let ss = value.match(phoneRegEx);
-      error = value === "" || ss === null;
+      let ismatch = value.match(phoneRegEx);
+      error = value === "" || ismatch === null;
     }
     validityChangedForm(!error, id, value);
     setError(error);

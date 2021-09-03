@@ -49,8 +49,6 @@ const useStyles = makeStyles((theme) => ({
     background: "#33428E",
     color: "white",
     padding: "10px 100px 10px 100px",
-    // height: 44,
-    // width: 300,
     "&:hover": {
       opacity: 0.85,
       background: "#33428E",
